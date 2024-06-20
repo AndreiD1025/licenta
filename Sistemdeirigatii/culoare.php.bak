@@ -1,0 +1,50 @@
+<?php
+
+$hostname = "localhost";
+$username = "root";
+$password = "";
+$database = "SistemIrigatii";
+
+$conn = mysqli_connect($hostname, $username, $password, $database);
+
+if(!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+if (isset($_POST['action'])) {
+        $action = $_POST['action'];
+        
+        // Verificare acțiunea dorită și executare operație corespunzătoare
+        if ($action == 'start_pompa') {
+            // Scrie în baza de date pentru pornirea pompei
+            // Exemplu de interogare:
+            $sql = "INSERT INTO pompa (status) VALUES (1)";
+            if ($conn->query($sql) === TRUE) {
+                echo "Pompa a fost pornită cu succes.";
+            } else {
+                echo "Eroare la pornirea pompei: " . $conn->error;
+            }
+        } elseif ($action == 'stop_pompa') {
+            // Scrie în baza de date pentru oprirea pompei
+            // Exemplu de interogare:
+            $sql = "INSERT INTO pompa (status) VALUES (0)";
+            if ($conn->query($sql) === TRUE) {
+                echo "Pompa a fost oprită cu succes.";
+            } else {
+                echo "Eroare la oprirea pompei: " . $conn->error;
+            }
+        } else {
+            echo "Acțiune necunoscută.";
+        }
+        
+        // Închide conexiunea la baza de date
+        $conn->close();
+    } else {
+        echo "Nu s-a specificat o acțiune.";
+    }
+} else {
+    echo "Cerere invalidă.";
+}
+?>
+
+?>

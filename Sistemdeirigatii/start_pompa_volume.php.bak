@@ -1,0 +1,34 @@
+<?php
+// Verificăm dacă s-a primit un volum valid prin POST
+if(isset($_POST['volum'])) {
+    // Conectare la baza de date
+    $hostname = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "SistemIrigatii";
+
+    // Creare conexiune
+    $conn = new mysqli($hostname, $username, $password, $database);
+
+    // Verificare conexiune
+    if ($conn->connect_error) {
+        die("Conexiunea la baza de date a eșuat: " . $conn->connect_error);
+    }
+
+    // Obținerea valorii volumului și actualizarea bazei de date
+    $volum = $_POST['volum'];
+    $status = 3; // Presupunând că 2 reprezintă starea pornit cu volum
+    $sql = "UPDATE pompa SET status='$status', volum='$volum' WHERE id_pompa=1"; // Înlocuiește 1 cu ID-ul pompei pentru care dorești actualizarea
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Actualizarea stării și volumului pompei a fost realizată cu succes.";
+    } else {
+        echo "Eroare la actualizarea stării și volumului pompei: " . $conn->error;
+    }
+
+    // Închidem conexiunea cu baza de date
+    $conn->close();
+} else {
+    echo "Volumul nu a fost primit corect.";
+}
+?>

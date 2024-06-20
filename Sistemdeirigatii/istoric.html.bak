@@ -1,0 +1,60 @@
+<?php
+	
+	require_once('db.php');
+	$query = "select * from activitate_pompa";
+	$result = mysqli_query($con,$query);
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Istoric</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class = "continut">
+<ul>
+  <li><a href="index.html">Utilizare Pompa</a></li>
+  <li><a class="active" href="istoric.html">Istoric </a></li>
+</ul>
+
+<div class = "chenar2">
+	<div class="continer">
+	<div class="container2">
+	
+	<table>
+		<thead>
+			<tr>
+				<th>Id Utilizare</th>
+				<th>Id Pompa</th>
+				<th>Id Teren</th>
+				<th>Volum Utilizat</th>
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+			<?php 
+			
+				while($row = mysqli_fetch_assoc($result))
+				{
+			?>
+				<td><?php echo $row['id_activitate']; ?></td>
+				<td><?php echo $row['id_pompa']; ?></td>
+				<td><?php echo $row['id_teren']; ?></td>
+				<td><?php echo $row['debit_apa']; ?></td>
+			<?php
+			}
+			?>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

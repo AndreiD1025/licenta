@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Utilizate Pompa</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="continut">
+<ul>
+  <li><a class="active" href="index.html">Utilizare Pompa</a></li>
+  <li><a href="istoric.html">Istoric </a></li>
+</ul>
+
+<div class="chenar">
+	<pre><button type="button" class="button_green" onclick="startPump()">START</button> Pornire pompa            <button type="button" class="button_red" onclick="stopPump()">STOP</button> Oprire pompa</pre>
+	<br>
+	<pre><button type="button" class="button"> <span id="valoare_numerică"></span></button> Umiditate                <button type="button" class="button"> <span id="valoare_baterie"></span></button> Baterie </pre>
+	<br>
+	<pre><button type="button" class="button_green" onclick="startPumpVolume()">START</button> Pornire pompa cu volum: <input type="number" id="volumInput" placeholder="Introdu volumul (ml)" min="0">
+	</pre>
+ </div>
+</div>
+
+
+<script>
+function startPump() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "start_pompa.php", true);
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      alert("Pompa a fost pornită cu succes!");
+    } else {
+      alert("Eroare la pornirea pompei. Vă rugăm să reîncercați mai târziu.");
+    }
+  };
+  xhr.send();
+}
+
+function stopPump() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "stop_pompa.php", true);
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      alert("Pompa a fost oprită cu succes!");
+    } else {
+      alert("Eroare la oprirea pompei. Vă rugăm să reîncercați mai târziu.");
+    }
+  };
+  xhr.send();
+  }
+  
+function displayUpdate(event) {
+    var data = JSON.parse(event.data);
+    document.getElementById('valoare_numerică').textContent = data.valoare_numerică;
+}
+
+function displayBaterie(event) {
+    var data = JSON.parse(event.data);
+    document.getElementById('valoare_baterie').textContent = data.valoare_baterie;
+}
+function startPumpVolume() {
+  var volum = document.getElementById('volumInput').value;
+  if (!volum) {
+    alert("Introduceți un volum valid!");
+    return;
+  }
+
+  // Apel către scriptul PHP pentru actualizarea stării și volumului pompei
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "start_pompa_volume.php", true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+      if (xhr.status == 200) {
+        alert("Pompa a fost pornită cu succes! Se va opri automat.");
+      } else {
+        alert("Eroare la pornirea pompei. Vă rugăm să reîncercați mai târziu.");
+      }
+    }
+  };
+  xhr.send("volum=" + volum);
+  document.getElementById('volumInput').value = '';
+}
+
+var eventSourceNumeric = new EventSource("update.php");
+eventSourceNumeric.onmessage = displayUpdate;
+
+var eventSourceBaterie = new EventSource("updatebaterie.php");
+eventSourceBaterie.onmessage = displayBaterie;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgba(72, 89, 246, 1);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px; 
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+ padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+pre {
+    margin: 0;
+    padding: 0;
+}
+.continut {
+	width: 40%;
+	border: 0px;
+	padding: 0px;
+	margin: auto;
+	border-radius: 10px;
+}
+
+.chenar {
+  background-color: #ccc;
+  height: 400px; 
+  width: 100%; 
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  
+}
+
+.active {
+  background-color: blue;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
+  margin-left: 60px
+}
+
+.left,
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button {
+  width: 50px; 
+  height: 50px;
+  border-radius: 50%; 
+  background-color: #007bff; 
+  border: none; 
+  color: white; 
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px; 
+}
+
+.button_green{
+	width: 50px; 
+  height: 50px;
+  border-radius: 50%; 
+  background-color: green; 
+  border: none; 
+  color: white; 
+  font-size: 10px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.button_red{
+	width: 50px; 
+  height: 50px;
+  border-radius: 50%; 
+  background-color: red; 
+  border: none; 
+  color: white; 
+  font-size: 10px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	background: linear-gradient(45deg, #49a09d, #5f2c82);
+	font-family: sans-serif;
+	font-weight: 100;
+}
+
+.container2 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	margin:10px;
+
+}
+
+table {
+	width: 200px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: black;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	th {
+		background-color: #55608f;
+	}
+}
+
+tbody {
+	tr {
+		&:hover {
+			background-color: rgba(255,255,255,0.3);
+		}
+	}
+	td {
+		position: relative;
+		&:hover {
+			&:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -9999px;
+				bottom: -9999px;
+				background-color: rgba(255,255,255,0.2);
+				z-index: -1;
+			}
+		}
+	}
+}
+
+.chenar2 {
+   background-color: #ccc;
+  height: 400px; 
+  width: 100%; 
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: scroll;
+}

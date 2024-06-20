@@ -1,0 +1,45 @@
+<?php
+ $hostname = "localhost";
+$username = "root";
+$password = "";
+$database = "SistemIrigatii";
+
+
+$conn = new mysqli($hostname, $username, $password, $database);
+
+// Verificarea conexiunii
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+// Verifică dacă request-ul POST conține parametrii necesari
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['procent_baterie']) && isset($_POST['umiditate_teren'])) {
+    $procent_baterie = floatval($_POST['procent_baterie']);
+    $umiditate_teren = floatval($_POST['umiditate_teren']);
+
+    // Updatează tabela baterie
+    $sql_baterie = "UPDATE baterie SET procent_baterie = ? WHERE id = 1";
+    $stmt_baterie = $conn->prepare($sql_baterie);
+    $stmt_baterie->bind_param("d", $procent_baterie);
+
+
+    $sql_umiditate = "UPDATE umiditate SET umiditate_teren = ? WHERE id = 1";
+    $stmt_umiditate = $conn->prepare($sql_umiditate);
+    $stmt_umiditate->bind_param("d", $umiditate_teren);
+
+    // Execută update-urile
+    if ($stmt_baterie->execute() && $stmt_umiditate->execute()) {
+        echo "Stats updated successfully";
+    } else {
+        echo "Error updating stats: " . $conn->error;
+    }
+
+    // Închide statement-urile
+    $stmt_baterie->close();
+    $stmt_umiditate->close();
+} else {
+    echo "Invalid request";
+}
+
+// Închide conexiunea
+$conn->close();
+?>

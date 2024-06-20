@@ -1,0 +1,38 @@
+<?php
+// Datele de conectare la baza de date
+   $hostname = "localhost";
+$username = "root";
+$password = "";
+$database = "SistemIrigatii";
+
+
+$conn = new mysqli($hostname, $username, $password, $database);
+if ($conn->connect_error) {
+    die("Conexiunea a eșuat: " . $conn->connect_error);
+}
+
+// Query pentru a selecta datele din tabel
+$sql = "SELECT * FROM activitate_pompa";
+$result = $conn->query($sql);
+
+// Afisare erori, daca exista
+if (!$result) {
+    die("Eroare la interogare: " . $conn->error);
+}
+
+// Verificare daca sunt date in tabel
+if ($result->num_rows > 0) {
+    // Afisare fiecare rand de date din tabel
+    while($row = $result->fetch_assoc()) {
+        echo "<tr>";
+		echo "<td>Id Utilizare: " . $row["id_activitate"] . "</td>";
+        echo "<td>Id Pompa: " . $row["id_pompa"] . "</td>";
+        echo "<td>Id Teren: " . $row["id_teren"] . "</td>";
+        echo "<td>Volum Utilizat: " . $row["debit_apa"] . "</td>";
+		echp "</tr>";
+    }
+} else {
+    echo "Nu există date de afișat în tabel.";
+}
+$conn->close();
+?>
