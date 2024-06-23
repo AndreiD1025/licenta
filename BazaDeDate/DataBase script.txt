@@ -1,0 +1,29 @@
+CREATE TABLE pompa (
+    id_pompa INT AUTO_INCREMENT PRIMARY KEY,
+    status VARCHAR(255),
+    volum INT
+);
+
+CREATE TABLE Terenuri (
+    id_teren INT AUTO_INCREMENT PRIMARY KEY,
+    umiditate INT,
+    id_pompa INT,
+    FOREIGN KEY (id_pompa) REFERENCES pompa(id_pompa)
+);
+
+CREATE TABLE baterie (
+    id_baterie INT AUTO_INCREMENT PRIMARY KEY,
+    procent_baterie INT,
+    id_pompa INT,
+    FOREIGN KEY (id_pompa) REFERENCES pompa(id_pompa)
+);
+
+CREATE TABLE Activitate_Pompa (
+    id_activitate INT AUTO_INCREMENT PRIMARY KEY,
+    id_pompa INT,
+    data_ora_oprire DATETIME DEFAULT CURRENT_TIMESTAMP,
+    debit_apa FLOAT,
+    id_teren INT,
+    FOREIGN KEY (id_pompa) REFERENCES pompa(id_pompa),
+    FOREIGN KEY (id_teren) REFERENCES Terenuri(id_teren)
+);
